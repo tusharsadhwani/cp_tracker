@@ -27,7 +27,11 @@ class SearchScreen extends StatelessWidget {
                       '${document['contest']} '
                       '${document['problem']}',
                     ),
-                    subtitle: Text(document['notes'] ?? 'No notes'),
+                    // TODO: Refactor
+                    subtitle: Text(
+                        (document['notes'] as String).trim().split('\n')[0] +
+                                '...' ??
+                            'No notes'),
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => ProblemScreen(document.documentID),
