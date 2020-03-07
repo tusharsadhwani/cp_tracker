@@ -163,9 +163,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       labelText: 'Notes',
                     ),
                     focusNode: _notesFocusNode,
-                    keyboardType: TextInputType.emailAddress,
-                    maxLines: 5,
-                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 8,
                     onSaved: (value) {
                       _formData['notes'] = value.trim();
                     },
