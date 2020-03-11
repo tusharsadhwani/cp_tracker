@@ -100,6 +100,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               value: 'Codeforces',
                             ),
                             DropdownMenuItem(
+                              child: Text('UVa'),
+                              value: 'UVa',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('SPOJ'),
+                              value: 'SPOJ',
+                            ),
+                            DropdownMenuItem(
                               child: Text('CodeChef'),
                               value: 'CodeChef',
                             ),
