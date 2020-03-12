@@ -13,6 +13,34 @@ class ProblemScreen extends StatefulWidget {
 class _ProblemScreenState extends State<ProblemScreen> {
   var _disableButton = false;
 
+  void confirmDelete(BuildContext ctx) async {
+    bool result = await showDialog(
+      context: ctx,
+      builder: (_) => AlertDialog(
+        title: Text('Delete Problem?'),
+        content: Text("Are you sure you want to delete this problem?"),
+        actions: [
+          FlatButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(ctx).pop(false);
+            },
+          ),
+          FlatButton(
+            child: Text('Delete'),
+            onPressed: () {
+              Navigator.of(ctx).pop(true);
+            },
+          ),
+        ],
+      ),
+    );
+
+    if (result) {
+      deleteProblem(ctx);
+    }
+  }
+
   void deleteProblem(BuildContext ctx) async {
     setState(() {
       _disableButton = true;
@@ -89,7 +117,7 @@ class _ProblemScreenState extends State<ProblemScreen> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       onPressed:
-                          _disableButton ? null : () => deleteProblem(ctx),
+                          _disableButton ? null : () => confirmDelete(ctx),
                       child: Text(
                         "Delete this Problem",
                         style: TextStyle(
