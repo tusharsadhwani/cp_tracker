@@ -17,6 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var _platformFocusNode = FocusNode();
   var _contestFocusNode = FocusNode();
   var _problemFocusNode = FocusNode();
+  var _tagsFocusNode = FocusNode();
   var _notesFocusNode = FocusNode();
   var _disableButton = false;
 
@@ -25,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _platformFocusNode.dispose();
     _contestFocusNode.dispose();
     _problemFocusNode.dispose();
+    _tagsFocusNode.dispose();
     _notesFocusNode.dispose();
     super.dispose();
   }
@@ -45,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'contest': _formData['contest'],
       'problem': _formData['problem'],
       'notes': _formData['notes'],
+      'tags': _formData['tags'],
     });
 
     _formKey.currentState.reset();
@@ -165,6 +168,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ],
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Tags',
+                    ),
+                    focusNode: _tagsFocusNode,
+                    onSaved: (value) {
+                      _formData['tags'] = value.trim();
+                    },
+                    validator: (value) {
+                      if (value.trim().length == 0) return "Enter Tags";
+                      return null;
+                    },
                   ),
                   TextFormField(
                     decoration: InputDecoration(

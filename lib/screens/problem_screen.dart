@@ -91,6 +91,8 @@ class _ProblemScreenState extends State<ProblemScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        SizedBox(height: 10),
+                        Text('Tags: ${problem['tags']}'),
                         SizedBox(
                           height: 15,
                         ),
