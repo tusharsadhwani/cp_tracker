@@ -11,7 +11,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final databaseReference = Firestore.instance;
+  final databaseReference = FirebaseFirestore.instance;
   final _formKey = GlobalKey<FormState>();
   var _formData = Map<String, String>();
   var _platformFocusNode = FocusNode();
@@ -53,9 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _disableButton = false;
     });
 
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Created document ${ref.documentID}'),
+        content: Text('Created document ${ref.id}'),
       ),
     );
   }

@@ -46,9 +46,9 @@ class _ProblemScreenState extends State<ProblemScreen> {
       _disableButton = true;
     });
 
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection('tushar')
-        .document(widget.problemId)
+        .doc(widget.problemId)
         .delete();
 
     Navigator.of(ctx).pop();
@@ -63,13 +63,13 @@ class _ProblemScreenState extends State<ProblemScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder(
-          future: Firestore.instance
+          future: FirebaseFirestore.instance
               .collection('tushar')
-              .document(widget.problemId)
+              .doc(widget.problemId)
               .get(),
           builder: (ctx, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              var problem = (snapshot.data as DocumentSnapshot).data;
+              var problem = (snapshot.data as DocumentSnapshot).data();
               if (problem == null)
                 return Center(
                   child: Text('Deleted Successfully.'),

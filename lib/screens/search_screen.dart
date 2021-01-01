@@ -11,7 +11,7 @@ class SearchScreen extends StatelessWidget {
         title: Text('Search'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('tushar').snapshots(),
+        stream: FirebaseFirestore.instance.collection('tushar').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
@@ -19,22 +19,23 @@ class SearchScreen extends StatelessWidget {
               return new Text('Loading...');
             default:
               return new ListView(
-                children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
+                children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  final note = document['notes'] as String ?? '';
+                  final firstLine = note.trim().split('\n')[0];
+                  final subtitle = firstLine.length > 50
+                      ? _firstFewWords(firstLine) + '...'
+                      : firstLine;
+
                   return ListTile(
                     title: Text(
                       '${document['platform']} '
                       '${document['contest']} '
                       '${document['problem']}',
                     ),
-                    // TODO: Refactor
-                    subtitle: Text(
-                        (document['notes'] as String).trim().split('\n')[0] +
-                                '...' ??
-                            'No notes'),
+                    subtitle: Text(subtitle),
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => ProblemScreen(document.documentID),
+                        builder: (_) => ProblemScreen(document.id),
                       ),
                     ),
                   );
@@ -45,4 +46,14 @@ class SearchScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+String _firstFewWords(String line) {
+  final words = line.split(' ').reversed.toList();
+  var ret = words.removeLast();
+  while (words.length > 0 && ret.length < 100) {
+    var word = words.removeLast();
+    ret += ' ' + word;
+  }
+  return ret;
 }
